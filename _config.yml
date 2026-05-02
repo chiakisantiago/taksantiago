@@ -13,7 +13,7 @@ highlighter: rouge
 sass:
   sass_dir: _sass
   style: compressed
-gems:
+plugins:
   - jekyll-sitemap
   - jekyll-gist
 
@@ -42,7 +42,7 @@ titlecase: true
 # Site owner
 owner:
   name: Tak Santiago
-  avatar: bio-photo.jpg
+  avatar: IMG_8967.JPG
   bio: "Hi, I'm Takumi. I take pictures."
 
 include: [".htaccess"]
