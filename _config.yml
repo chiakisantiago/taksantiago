@@ -1,6 +1,6 @@
 # Site wide configuration
 
-title:            Tak Santiago
+title:            Takumi Santiago
 locale:           en_US
 url:              //chiakisantiago.github.io/taksantiago
 
@@ -41,9 +41,12 @@ titlecase: true
 
 # Site owner
 owner:
-  name: Tak Santiago
+  name: Takumi Santiago
   avatar: IMG_8967.JPG
   bio: "Hi, I'm Takumi. I take pictures."
+  location: "San Diego, CA"
+  email: takumi.santiago@gmail.com
+  instagram:
 
 include: [".htaccess"]
 exclude: ["lib", "config.rb", "Capfile", "config", "log", "Rakefile", "Rakefile.rb", "tmp", "less", "*.sublime-project", "*.sublime-workspace", "test", "spec", "Gruntfile.js", "package.json", "node_modules", "Gemfile", "Gemfile.lock", "LICENSE", "README.md"]

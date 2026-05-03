@@ -1,0 +1,116 @@
+---
+layout: page
+title: Portfolio
+share: false
+---
+
+<section class="portfolio-section">
+  <h2 class="portfolio-region">Europe</h2>
+  <div class="film-reel" id="europe-reel">
+    <div class="film-reel-track">
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5757.jpg" alt="Amsterdam"></div>
+      </div>
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5840.jpg" alt="Amsterdam"></div>
+      </div>
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5763.jpg" alt="Amsterdam"></div>
+      </div>
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5714-2.jpg" alt="Amsterdam"></div>
+      </div>
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5754.jpg" alt="Amsterdam"></div>
+      </div>
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5765.jpg" alt="Amsterdam"></div>
+      </div>
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5773.jpg" alt="Amsterdam"></div>
+      </div>
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5781.jpg" alt="Amsterdam"></div>
+      </div>
+      <div class="film-frame">
+        <div class="frame-inner"><img src="{{ site.url }}/images/TRS5787.jpg" alt="Amsterdam"></div>
+      </div>
+    </div>
+    <div class="reel-vignette"></div>
+  </div>
+</section>
+
+<section class="portfolio-section">
+  <h2 class="portfolio-region">Japan</h2>
+  <p class="portfolio-coming-soon">Photos coming soon.</p>
+</section>
+
+<script>
+(function () {
+  var container = document.getElementById('europe-reel');
+  if (!container) return;
+
+  var track    = container.querySelector('.film-reel-track');
+  var origFrames = Array.from(track.querySelectorAll('.film-frame'));
+  var n = origFrames.length;
+
+  // Clone last frame before the first, and first frame after the last
+  // so the loop wraps seamlessly
+  var cloneLast  = origFrames[n - 1].cloneNode(true);
+  var cloneFirst = origFrames[0].cloneNode(true);
+  track.insertBefore(cloneLast, origFrames[0]);
+  track.appendChild(cloneFirst);
+
+  var allFrames = Array.from(track.querySelectorAll('.film-frame'));
+  // indices: 0=clone-of-last, 1..n=real frames, n+1=clone-of-first
+  var current = 1; // start on the real first frame
+  var isTransitioning = false;
+
+  function getFrameWidth() {
+    return allFrames[0].offsetWidth;
+  }
+
+  function setPosition(animate) {
+    var fw = getFrameWidth();
+    var cw = container.offsetWidth;
+    var offset = (cw - fw) / 2 - current * fw;
+
+    track.style.transition = animate
+      ? 'transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+      : 'none';
+    track.style.transform = 'translateX(' + offset + 'px)';
+
+    allFrames.forEach(function (f, i) {
+      f.classList.toggle('active', i === current);
+    });
+  }
+
+  // After sliding to a clone, snap to the real counterpart silently
+  track.addEventListener('transitionend', function () {
+    if (current === n + 1) {
+      current = 1;
+      setPosition(false);
+    } else if (current === 0) {
+      current = n;
+      setPosition(false);
+    }
+    isTransitioning = false;
+  });
+
+  // Init — no animation on first render
+  setPosition(false);
+
+  // Auto-advance every 4 seconds
+  setInterval(function () {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    current++;
+    setPosition(true);
+  }, 2800);
+
+  // Recalculate on resize
+  window.addEventListener('resize', function () {
+    setPosition(false);
+  });
+}());
+</script>
